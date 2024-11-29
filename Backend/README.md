@@ -311,3 +311,166 @@ The request body must include the following fields:
 - Ensure that the `Content-Type` header is set to `application/json`.
 - Make sure to provide a valid email and password. Incorrect credentials will return a `401 Unauthorized` error.
 - Use the returned JWT token for authenticated requests to protected routes.
+
+### Get User Profile
+
+#### Endpoint:
+
+`GET /api/users/profile`
+
+#### Description:
+
+Retrieve the profile details of the authenticated user.
+
+#### Request:
+
+**Headers:**
+
+- `Authorization`: `Bearer <JWT token>` (Required)
+
+#### Response:
+
+##### Success Response:
+
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "_id": "string",
+    "fullName": {
+      "firstName": "string",
+      "lastName": "string"
+    },
+    "email": "string"
+  }
+  ```
+
+##### Error Responses:
+
+1. **Unauthorized Access**
+
+   - **Status Code:** `401 Unauthorized`
+   - **Response Body:**
+     ```json
+     {
+       "error": "Authentication required"
+     }
+     ```
+
+2. **Server Error**
+   - **Status Code:** `500 Internal Server Error`
+   - **Response Body:**
+     ```json
+     {
+       "error": "Internal server error"
+     }
+     ```
+
+#### Example Request:
+
+**Headers:**
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Example Response:**
+
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "_id": "64c75dfc451d8b001c4e1df4",
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+  ```
+
+---
+
+### Logout User
+
+#### Endpoint:
+
+`POST /api/users/logout`
+
+#### Description:
+
+Logs out the authenticated user by invalidating their token and adding it to a blacklist.
+
+#### Request:
+
+**Headers:**
+
+- `Authorization`: `Bearer <JWT token>` (Required)
+
+**Cookies:**
+
+- `token`: `JWT token` (Optional, if not using the `Authorization` header)
+
+#### Response:
+
+##### Success Response:
+
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "message": "Logout successful"
+  }
+  ```
+
+##### Error Responses:
+
+1. **Unauthorized Access**
+
+   - **Status Code:** `401 Unauthorized`
+   - **Response Body:**
+     ```json
+     {
+       "error": "Authentication required"
+     }
+     ```
+
+2. **Server Error**
+   - **Status Code:** `500 Internal Server Error`
+   - **Response Body:**
+     ```json
+     {
+       "error": "Internal server error"
+     }
+     ```
+
+#### Example Request:
+
+**Headers:**
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### Example Response:
+
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "message": "Logout successful"
+  }
+  ```
+
+---
+
+### Notes:
+
+- Ensure that the `Authorization` header contains a valid JWT token or the `token` cookie is provided.
+- Tokens are added to a blacklist upon logout, preventing reuse.
+
+---
