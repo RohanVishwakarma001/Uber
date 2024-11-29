@@ -6,6 +6,7 @@ import cors from "cors";
 import connectDB from "./db/db.js";
 connectDB();
 import userRoutes from "./routes/user.routes.js";
+import captainRoutes from "./routes/captain.routes.js";
 import cookieParser from "cookie-parser";
 
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 4000;
 
 app.use("/api/users", userRoutes);
+app.use("/api/captains", captainRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

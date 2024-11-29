@@ -397,7 +397,7 @@ Retrieve the profile details of the authenticated user.
 
 #### Endpoint:
 
-`POST /api/users/logout`
+`GET /api/users/logout`
 
 #### Description:
 
